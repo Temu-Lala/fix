@@ -2,6 +2,11 @@
   "name": "expo-app",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "scripts": {
+    "start": "bunx rork start -p zomofrx43yljxj74pq44y --tunnel",
+    "start-web": "bunx rork start -p zomofrx43yljxj74pq44y --web --tunnel",
+    "start-web-dev": "DEBUG=expo* bunx rork start -p zomofrx43yljxj74pq44y --web --tunnel"
+  },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
     "@react-native-async-storage/async-storage": "2.1.2",
@@ -16,7 +21,7 @@
     "expo-image-picker": "~16.1.4",
     "expo-linear-gradient": "~14.1.5",
     "expo-linking": "~7.1.4",
-    "expo-location": "~18.1.6",
+    "expo-location": "~18.1.4",
     "expo-router": "~5.0.3",
     "expo-splash-screen": "~0.30.7",
     "expo-status-bar": "~2.2.3",
@@ -25,11 +30,11 @@
     "expo-web-browser": "~14.1.6",
     "lucide-react-native": "^0.475.0",
     "nativewind": "^4.1.23",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "react-native": "0.79.1",
     "react-native-gesture-handler": "~2.24.0",
+    "react-native-reanimated": "^3.18.0",
     "react-native-safe-area-context": "5.3.0",
     "react-native-screens": "~4.10.0",
     "react-native-svg": "15.11.2",

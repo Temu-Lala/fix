@@ -18,7 +18,7 @@ export const translations = {
     error: 'Error',
     success: 'Success',
     optional: 'Optional',
-    
+
     // Home Screen
     greeting: 'Hello',
     subtitle: 'What needs fixing today?',
@@ -29,7 +29,7 @@ export const translations = {
     categories: 'Categories',
     featuredFixers: 'Featured Fixers',
     seeAll: 'See All',
-    
+
     // Auth
     welcomeBack: 'Welcome Back',
     createAccount: 'Create Account',
@@ -45,7 +45,7 @@ export const translations = {
     alreadyHaveAccount: 'Already have an account?',
     signUp: 'Sign Up',
     signIn: 'Sign In',
-    
+
     // Profile
     editProfile: 'Edit Profile',
     paymentMethods: 'Payment Methods',
@@ -54,18 +54,20 @@ export const translations = {
     helpSupport: 'Help & Support',
     logout: 'Logout',
     version: 'Version',
-    
+
     // Fixer Application
     applyAsFixer: 'Apply as Fixer',
     becomeAFixer: 'Become a Fixer',
     fixerApplication: 'Fixer Application',
-    fixerApplicationDescription: 'Join our network of trusted fixers and start earning money by helping others.',
+    fixerApplicationDescription:
+      'Join our network of trusted fixers and start earning money by helping others.',
     applicationStatusDescription: 'Your application status will be updated here.',
     applicationPending: 'Application Pending',
     applicationApproved: 'Application Approved',
     applicationRejected: 'Application Rejected',
     applicationSubmitted: 'Application Submitted!',
-    applicationPendingMessage: 'Your application is being reviewed. We will notify you once it has been processed.',
+    applicationPendingMessage:
+      'Your application is being reviewed. We will notify you once it has been processed.',
     personalInformation: 'Personal Information',
     identification: 'Identification',
     serviceInformation: 'Service Information',
@@ -86,7 +88,7 @@ export const translations = {
     hourlyRate: 'Hourly Rate',
     availability: 'Availability',
     submitApplication: 'Submit Application',
-    
+
     // Settings
     language: 'Language',
     theme: 'Theme',
@@ -100,18 +102,19 @@ export const translations = {
     privacy: 'Privacy',
     security: 'Security',
     legal: 'Legal',
-    
+
     // Privacy Settings
     profileVisibility: 'Profile Visibility',
     showOnlineStatus: 'Show Online Status',
     locationTracking: 'Location Tracking',
     shareUsageData: 'Share Usage Data',
     personalizedAds: 'Personalized Ads',
-    privacyDescription: 'Manage your privacy settings and control how your data is used.',
+    privacyDescription:
+      'Manage your privacy settings and control how your data is used.',
     dataManagement: 'Data Management',
     downloadMyData: 'Download My Data',
     deleteMyAccount: 'Delete My Account',
-    
+
     // Legal
     termsOfService: 'Terms of Service',
     privacyPolicy: 'Privacy Policy',
@@ -122,7 +125,7 @@ export const translations = {
     legalDescription: 'Review our legal documents and policies.',
     legalContactDescription: 'For legal inquiries, please contact us at:',
     contact: 'Contact',
-    
+
     // Booking
     selectFixerService: 'Select Fixer & Service',
     scheduleLocation: 'Schedule & Location',
@@ -144,7 +147,7 @@ export const translations = {
     tax: 'Tax',
     total: 'Total',
     confirmBooking: 'Confirm Booking',
-    
+
     // Payment Methods
     telebirr: 'Telebirr',
     chapa: 'Chapa',
@@ -154,7 +157,7 @@ export const translations = {
     cbe: 'Commercial Bank of Ethiopia',
     abyssiniaBank: 'Bank of Abyssinia',
     creditCard: 'Credit Card',
-    
+
     // Categories
     appliances: 'Appliances',
     plumbing: 'Plumbing',
@@ -164,7 +167,24 @@ export const translations = {
     autoRepair: 'Auto Repair',
     painting: 'Painting',
     cleaning: 'Cleaning',
+
+    // Marketplace
+    marketplace: 'Marketplace',
+    browseProducts: 'Browse Products',
+    sellYourItems: 'Sell Your Items',
+    myListings: 'My Listings',
+    addNewListing: 'Add New Listing',
+    productTitle: 'Product Title',
+    productDescription: 'Product Description',
+    productPrice: 'Product Price',
+    uploadProductPhotos: 'Upload Product Photos',
+    submitListing: 'Submit Listing',
+    editListing: 'Edit Listing',
+    deleteListing: 'Delete Listing',
+    viewDetails: 'View Details',
+    searchProducts: 'Search Products',
   },
+
   am: {
     // Common
     home: 'ቤት',
@@ -182,7 +202,7 @@ export const translations = {
     error: 'ስህተት',
     success: 'ተሳክቷል',
     optional: 'አማራጭ',
-    
+
     // Home Screen
     greeting: 'ሰላም',
     subtitle: 'ዛሬ ምን መጠገን ይፈልጋሉ?',
@@ -193,7 +213,7 @@ export const translations = {
     categories: 'ምድቦች',
     featuredFixers: 'ተመራጭ መጠገኞች',
     seeAll: 'ሁሉንም ይመልከቱ',
-    
+
     // Auth
     welcomeBack: 'እንኳን ደህና መጡ',
     createAccount: 'መለያ ይፍጠሩ',
@@ -209,7 +229,7 @@ export const translations = {
     alreadyHaveAccount: 'መለያ አለዎት?',
     signUp: 'ተመዝገብ',
     signIn: 'ግባ',
-    
+
     // Profile
     editProfile: 'መገለጫ አርትዕ',
     paymentMethods: 'የክፍያ ዘዴዎች',
@@ -218,18 +238,20 @@ export const translations = {
     helpSupport: 'እርዳታ እና ድጋፍ',
     logout: 'ውጣ',
     version: 'ስሪት',
-    
+
     // Fixer Application
     applyAsFixer: 'እንደ መጠገኛ ተመዝገብ',
     becomeAFixer: 'መጠገኛ ይሁኑ',
     fixerApplication: 'የመጠገኛ ማመልከቻ',
-    fixerApplicationDescription: 'በእኛ የታመኑ መጠገኞች ኔትወርክ ውስጥ ይቀላቀሉ እና ሌሎችን በመርዳት ገንዘብ ማግኘት ይጀምሩ።',
+    fixerApplicationDescription:
+      'በእኛ የታመኑ መጠገኞች ኔትወርክ ውስጥ ይቀላቀሉ እና ሌሎችን በመርዳት ገንዘብ ማግኘት ይጀምሩ።',
     applicationStatusDescription: 'የማመልከቻዎ ሁኔታ እዚህ ይዘምናል።',
     applicationPending: 'ማመልከቻ በመጠባበቅ ላይ',
     applicationApproved: 'ማመልከቻ ተቀባይነት አግኝቷል',
     applicationRejected: 'ማመልከቻ ውድቅ ሆኗል',
     applicationSubmitted: 'ማመልከቻ ተልኳል!',
-    applicationPendingMessage: 'ማመልከቻዎ በመገምገም ላይ ነው። ከተሰራ በኋላ እናሳውቅዎታለን።',
+    applicationPendingMessage:
+      'ማመልከቻዎ በመገምገም ላይ ነው። ከተሰራ በኋላ እናሳውቅዎታለን።',
     personalInformation: 'የግል መረጃ',
     identification: 'መታወቂያ',
     serviceInformation: 'የአገልግሎት መረጃ',
@@ -250,7 +272,7 @@ export const translations = {
     hourlyRate: 'የሰዓት ክፍያ',
     availability: 'ተገኝነት',
     submitApplication: 'ማመልከቻ ላክ',
-    
+
     // Settings
     language: 'ቋንቋ',
     theme: 'ገጽታ',
@@ -264,18 +286,19 @@ export const translations = {
     privacy: 'ግላዊነት',
     security: 'ደህንነት',
     legal: 'ህጋዊ',
-    
+
     // Privacy Settings
     profileVisibility: 'የመገለጫ ታይነት',
     showOnlineStatus: 'የመስመር ላይ ሁኔታ አሳይ',
     locationTracking: 'የቦታ መከታተል',
     shareUsageData: 'የአጠቃቀም መረጃ አጋራ',
     personalizedAds: 'የግል ማስታወቂያዎች',
-    privacyDescription: 'የግላዊነት ቅንብሮችዎን ያስተዳድሩ እና መረጃዎ እንዴት እንደሚጠቀም ይቆጣጠሩ።',
+    privacyDescription:
+      'የግላዊነት ቅንብሮችዎን ያስተዳድሩ እና መረጃዎ እንዴት እንደሚጠቀም ይቆጣጠሩ።',
     dataManagement: 'የመረጃ አስተዳደር',
     downloadMyData: 'መረጃዬን አውርድ',
     deleteMyAccount: 'መለያዬን ሰርዝ',
-    
+
     // Legal
     termsOfService: 'የአገልግሎት ውሎች',
     privacyPolicy: 'የግላዊነት ፖሊሲ',
@@ -286,7 +309,7 @@ export const translations = {
     legalDescription: 'የእኛን ህጋዊ ሰነዶች እና ፖሊሲዎች ይገምግሙ።',
     legalContactDescription: 'ለህጋዊ ጥያቄዎች፣ እባክዎ በዚህ አድራሻ ያግኙን፡',
     contact: 'ግንኙነት',
-    
+
     // Booking
     selectFixerService: 'መጠገኛ እና አገልግሎት ይምረጡ',
     scheduleLocation: 'ጊዜ እና ቦታ',
@@ -308,7 +331,7 @@ export const translations = {
     tax: 'ግብር',
     total: 'ጠቅላላ',
     confirmBooking: 'ቦታ ማስያዝን አረጋግጥ',
-    
+
     // Payment Methods
     telebirr: 'ቴሌብር',
     chapa: 'ቻፓ',
@@ -318,7 +341,7 @@ export const translations = {
     cbe: 'የኢትዮጵያ ንግድ ባንክ',
     abyssiniaBank: 'የአቢሲኒያ ባንክ',
     creditCard: 'ክሬዲት ካርድ',
-    
+
     // Categories
     appliances: 'የቤት እቃዎች',
     plumbing: 'የውሃ ስራ',
@@ -328,15 +351,31 @@ export const translations = {
     autoRepair: 'የመኪና ጥገና',
     painting: 'ቀለም ስራ',
     cleaning: 'ጽዳት ስራ',
+
+    // Marketplace
+    marketplace: 'ገበያ',
+    browseProducts: 'ምርቶችን ያሳዩ',
+    sellYourItems: 'እቃዎችዎን ይሸጡ',
+    myListings: 'የእኔ ዝርዝሮች',
+    addNewListing: 'አዲስ ዝርዝር ያክሉ',
+    productTitle: 'የምርት ርዕስ',
+    productDescription: 'የምርት መግለጫ',
+    productPrice: 'የምርት ዋጋ',
+    uploadProductPhotos: 'የምርት ፎቶዎችን ያስገቡ',
+    submitListing: 'ዝርዝሩን ያስገቡ',
+    editListing: 'ዝርዝሩን አርትዕ',
+    deleteListing: 'ዝርዝሩን አስወግድ',
+    viewDetails: 'ዝርዝሩን እይ',
+    searchProducts: 'ምርቶችን ፈልግ',
   },
 };
 
 export const useTranslation = () => {
   const language = useSettingsStore((state) => state.language);
-  
+
   const t = (key: keyof typeof translations.en): string => {
     return translations[language][key] || translations.en[key] || key;
   };
-  
+
   return { t, language };
 };
