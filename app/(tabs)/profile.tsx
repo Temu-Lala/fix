@@ -42,6 +42,10 @@ export default function ProfileScreen() {
     router.push('/fixer-application');
   };
 
+  const handleApplyAsSeller = () => {
+    router.push('/seller-application');
+  };
+
   const menuItems = [
     {
       icon: <Settings size={24} color={colors.text} />,
@@ -123,7 +127,10 @@ export default function ProfileScreen() {
             size="small"
           />
         </View>
-
+        {/* Apply as Seller Section */}
+        <TouchableOpacity style={[styles.applySellerBtn, { backgroundColor: colors.primary }]} onPress={handleApplyAsSeller} activeOpacity={0.85}>
+          <Text style={styles.applySellerBtnText}>Apply as Seller</Text>
+        </TouchableOpacity>
         {/* Apply as Fixer Section */}
         <View style={[styles.fixerApplicationCard, { backgroundColor: colors.card }]}>
           <View style={styles.fixerApplicationHeader}>
@@ -142,10 +149,10 @@ export default function ProfileScreen() {
             title={getApplicationStatusText()}
             onPress={handleApplyAsFixer}
             disabled={applicationStatus === 'pending' || applicationStatus === 'approved'}
-            style={[
-              styles.fixerApplicationButton,
-              { backgroundColor: getApplicationStatusColor() }
-            ]}
+            style={{
+              ...styles.fixerApplicationButton,
+              backgroundColor: getApplicationStatusColor(),
+            }}
           />
         </View>
         
@@ -309,5 +316,22 @@ const styles = StyleSheet.create({
     fontSize: Theme.fontSize.xs,
     textAlign: 'center',
     marginBottom: Theme.spacing.xl,
+  },
+  applySellerBtn: {
+    marginTop: 18,
+    marginHorizontal: 24,
+    borderRadius: 10,
+    paddingVertical: 14,
+    alignItems: 'center',
+    shadowColor: '#4A80F0',
+    shadowOpacity: 0.10,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  applySellerBtnText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 17,
+    letterSpacing: 0.2,
   },
 });

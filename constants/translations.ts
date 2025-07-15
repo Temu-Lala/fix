@@ -183,6 +183,19 @@ export const translations = {
     deleteListing: 'Delete Listing',
     viewDetails: 'View Details',
     searchProducts: 'Search Products',
+    // Marketplace (additional keys for cart, alerts, etc.)
+    favorites: 'Favorites',
+    comingSoon: 'Coming Soon',
+    cart: 'Cart',
+    itemsInCart: 'items in cart',
+    inStock: 'In Stock',
+    outOfStock: 'Out of Stock',
+    addToCart: 'Add to Cart',
+    addedToCart: 'Added to Cart',
+    productAddedToCart: 'Product added to cart!',
+    alreadyInCart: 'Already in Cart',
+    productAlreadyInCart: 'Product is already in your cart.',
+    loadMore: 'Load More',
   },
 
   am: {
@@ -367,6 +380,19 @@ export const translations = {
     deleteListing: 'ዝርዝሩን አስወግድ',
     viewDetails: 'ዝርዝሩን እይ',
     searchProducts: 'ምርቶችን ፈልግ',
+    // Marketplace (additional keys for cart, alerts, etc.)
+    favorites: 'የተወደዱ',
+    comingSoon: 'በቅርቡ',
+    cart: 'ጋሪ',
+    itemsInCart: 'እቃዎች በጋሪ',
+    inStock: 'በአክሲዮን ላይ',
+    outOfStock: 'አይገኝም',
+    addToCart: 'ወደ ጋሪ አክል',
+    addedToCart: 'ወደ ጋሪ ታክሏል',
+    productAddedToCart: 'ምርቱ ወደ ጋሪ ታክሏል!',
+    alreadyInCart: 'አስቀድሞ በጋሪ ላይ አለ',
+    productAlreadyInCart: 'ምርቱ አስቀድሞ በጋሪ ላይ አለ።',
+    loadMore: 'ተጨማሪ አሳይ',
   },
 };
 

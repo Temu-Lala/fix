@@ -25,22 +25,25 @@ import {
 import * as ImagePicker from 'expo-image-picker';
 import { useTheme } from '@/hooks/useTheme';
 import { useTranslation } from '@/constants/translations';
-import { useFixerApplicationStore } from '@/store/fixerApplicationStore';
+// Replace with your actual seller application store if available
+const useSellerApplicationStore = () => ({
+  submitApplication: async (data: any) => Promise.resolve(),
+  isLoading: false,
+  applicationStatus: null,
+});
 import { useAuthStore } from '@/store/authStore';
 import { categories } from '@/mocks/categories';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import Theme from '@/constants/theme';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import MapView, { Marker } from 'react-native-maps';
 
-export default function FixerApplicationScreen() {
+export default function SellerApplicationScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const { submitApplication, isLoading, applicationStatus } = useFixerApplicationStore();
+  const { submitApplication, isLoading, applicationStatus } = useSellerApplicationStore();
   const { user } = useAuthStore();
-  
+
   const [formData, setFormData] = useState({
     fullName: user?.name || '',
     phoneNumber: user?.phone || '',
@@ -59,20 +62,6 @@ export default function FixerApplicationScreen() {
   });
 
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showTimePicker, setShowTimePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedTime, setSelectedTime] = useState<Date | null>(null);
-  const [mapRegion, setMapRegion] = useState({
-    latitude: 9.03,
-    longitude: 38.74,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  });
-  const [marker, setMarker] = useState({
-    latitude: 9.03,
-    longitude: 38.74,
-  });
 
   const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -202,12 +191,10 @@ export default function FixerApplicationScreen() {
           headerTintColor: colors.text,
         }} 
       />
-      
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
           {t('personalInformation')}
         </Text>
-        
         <Input
           label={t('fullName')}
           placeholder="Enter your full name"
@@ -215,7 +202,6 @@ export default function FixerApplicationScreen() {
           onChangeText={(value) => handleInputChange('fullName', value)}
           leftIcon={<User size={20} color={colors.textSecondary} />}
         />
-        
         <Input
           label={t('phoneNumber')}
           placeholder="Enter your phone number"
@@ -224,7 +210,6 @@ export default function FixerApplicationScreen() {
           keyboardType="phone-pad"
           leftIcon={<Phone size={20} color={colors.textSecondary} />}
         />
-        
         <Input
           label={t('email')}
           placeholder="Enter your email"
@@ -233,7 +218,6 @@ export default function FixerApplicationScreen() {
           keyboardType="email-address"
           leftIcon={<Mail size={20} color={colors.textSecondary} />}
         />
-        
         <Input
           label={t('bio')}
           placeholder="Tell us about yourself and your experience"
@@ -243,57 +227,9 @@ export default function FixerApplicationScreen() {
           numberOfLines={4}
           leftIcon={<FileText size={20} color={colors.textSecondary} />}
         />
-
-        <Text style={[styles.sectionTitle, { color: colors.text }]}>Date & Time</Text>
-        <View style={styles.dateTimeRow}>
-          <TouchableOpacity
-            style={[styles.dateTimeButton, { backgroundColor: colors.card, borderColor: colors.border }]}
-            onPress={() => setShowDatePicker(true)}
-          >
-            <Clock size={20} color={colors.primary} />
-            <Text style={[styles.dateTimeText, { color: colors.text }]}>
-              {selectedDate ? selectedDate.toLocaleDateString() : 'Select Date'}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.dateTimeButton, { backgroundColor: colors.card, borderColor: colors.border }]}
-            onPress={() => setShowTimePicker(true)}
-          >
-            <Clock size={20} color={colors.primary} />
-            <Text style={[styles.dateTimeText, { color: colors.text }]}>
-              {selectedTime ? selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Select Time'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        {showDatePicker && (
-          <DateTimePicker
-            value={selectedDate || new Date()}
-            mode="date"
-            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-            onChange={(_, date) => {
-              setShowDatePicker(false);
-              if (date) setSelectedDate(date);
-            }}
-            themeVariant={colors.background === '#fff' ? 'light' : 'dark'}
-          />
-        )}
-        {showTimePicker && (
-          <DateTimePicker
-            value={selectedTime || new Date()}
-            mode="time"
-            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-            onChange={(_, time) => {
-              setShowTimePicker(false);
-              if (time) setSelectedTime(time);
-            }}
-            themeVariant={colors.background === '#fff' ? 'light' : 'dark'}
-          />
-        )}
-
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
           {t('identification')}
         </Text>
-
         <View style={styles.idTypeContainer}>
           <Text style={[styles.label, { color: colors.text }]}>
             {t('idType')}
@@ -312,7 +248,6 @@ export default function FixerApplicationScreen() {
                 {t('nationalId')}
               </Text>
             </TouchableOpacity>
-            
             <TouchableOpacity 
               style={styles.radioOption}
               onPress={() => handleInputChange('idType', 'passport')}
@@ -328,14 +263,12 @@ export default function FixerApplicationScreen() {
             </TouchableOpacity>
           </View>
         </View>
-
         <Input
           label={t('idNumber')}
           placeholder="Enter your ID number"
           value={formData.idNumber}
           onChangeText={(value) => handleInputChange('idNumber', value)}
         />
-
         <View style={styles.uploadSection}>
           <Text style={[styles.label, { color: colors.text }]}>
             {t('uploadIdDocument')}
@@ -350,7 +283,6 @@ export default function FixerApplicationScreen() {
             </Text>
           </TouchableOpacity>
         </View>
-
         <View style={styles.uploadSection}>
           <Text style={[styles.label, { color: colors.text }]}>
             {t('profilePhoto')} ({t('optional')})
@@ -365,11 +297,9 @@ export default function FixerApplicationScreen() {
             </Text>
           </TouchableOpacity>
         </View>
-
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
           {t('serviceInformation')}
         </Text>
-
         <View style={styles.categoriesSection}>
           <Text style={[styles.label, { color: colors.text }]}>
             {t('serviceCategories')}
@@ -404,7 +334,6 @@ export default function FixerApplicationScreen() {
             ))}
           </View>
         </View>
-
         <Input
           label={t('experience')}
           placeholder="Describe your relevant experience"
@@ -413,7 +342,6 @@ export default function FixerApplicationScreen() {
           multiline
           numberOfLines={3}
         />
-
         <View style={styles.rateSection}>
           <Text style={[styles.label, { color: colors.text }]}>
             {t('hourlyRate')} (ETB)
@@ -429,7 +357,6 @@ export default function FixerApplicationScreen() {
             />
           </View>
         </View>
-
         <View style={styles.availabilitySection}>
           <Text style={[styles.label, { color: colors.text }]}>
             {t('availability')}
@@ -459,51 +386,16 @@ export default function FixerApplicationScreen() {
             ))}
           </View>
         </View>
-
         <Button
           title={t('submitApplication')}
           onPress={handleSubmit}
           loading={isLoading}
           style={styles.submitButton}
         />
-
-        <Text style={[styles.sectionTitle, { color: colors.text }]}>Location</Text>
-        <View style={styles.mapContainer}>
-          <MapView
-            style={styles.map}
-            region={mapRegion}
-            onRegionChangeComplete={setMapRegion}
-            onPress={e => setMarker(e.nativeEvent.coordinate)}
-            customMapStyle={colors.background === '#fff' ? [] : darkMapStyle}
-          >
-            <Marker coordinate={marker} />
-          </MapView>
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
-
-const darkMapStyle = [
-  { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
-  { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
-  { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
-  { featureType: 'administrative.locality', elementType: 'labels.text.fill', stylers: [{ color: '#d59563' }] },
-  { featureType: 'poi', elementType: 'labels.text.fill', stylers: [{ color: '#d59563' }] },
-  { featureType: 'poi.park', elementType: 'geometry', stylers: [{ color: '#263c3f' }] },
-  { featureType: 'poi.park', elementType: 'labels.text.fill', stylers: [{ color: '#6b9a76' }] },
-  { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#38414e' }] },
-  { featureType: 'road', elementType: 'geometry.stroke', stylers: [{ color: '#212a37' }] },
-  { featureType: 'road', elementType: 'labels.text.fill', stylers: [{ color: '#9ca5b3' }] },
-  { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#746855' }] },
-  { featureType: 'road.highway', elementType: 'geometry.stroke', stylers: [{ color: '#1f2835' }] },
-  { featureType: 'road.highway', elementType: 'labels.text.fill', stylers: [{ color: '#f3d19c' }] },
-  { featureType: 'transit', elementType: 'geometry', stylers: [{ color: '#2f3948' }] },
-  { featureType: 'transit.station', elementType: 'labels.text.fill', stylers: [{ color: '#d59563' }] },
-  { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#17263c' }] },
-  { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#515c6d' }] },
-  { featureType: 'water', elementType: 'labels.text.stroke', stylers: [{ color: '#17263c' }] },
-];
 
 const styles = StyleSheet.create({
   container: {
@@ -521,7 +413,7 @@ const styles = StyleSheet.create({
   },
   statusTitle: {
     fontSize: Theme.fontSize.xxl,
-    fontWeight: '700',
+    fontWeight: '700' as any,
     marginBottom: Theme.spacing.m,
     textAlign: 'center',
   },
@@ -536,13 +428,13 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: Theme.fontSize.l,
-    fontWeight: '600',
+    fontWeight: '600' as any,
     marginBottom: Theme.spacing.m,
     marginTop: Theme.spacing.l,
   },
   label: {
     fontSize: Theme.fontSize.s,
-    fontWeight: '500',
+    fontWeight: '500' as any,
     marginBottom: Theme.spacing.s,
   },
   idTypeContainer: {
@@ -581,7 +473,7 @@ const styles = StyleSheet.create({
   uploadButtonText: {
     fontSize: Theme.fontSize.m,
     marginLeft: Theme.spacing.s,
-    fontWeight: '500',
+    fontWeight: '500' as any,
   },
   categoriesSection: {
     marginBottom: Theme.spacing.m,
@@ -632,37 +524,9 @@ const styles = StyleSheet.create({
   },
   dayText: {
     fontSize: Theme.fontSize.s,
-    fontWeight: '500',
+    fontWeight: '500' as any,
   },
   submitButton: {
     marginBottom: Theme.spacing.xl,
   },
-  dateTimeRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: Theme.spacing.m,
-    gap: Theme.spacing.m,
-  },
-  dateTimeButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: Theme.borderRadius.s,
-    paddingVertical: Theme.spacing.s,
-    paddingHorizontal: Theme.spacing.m,
-    marginRight: Theme.spacing.m,
-  },
-  dateTimeText: {
-    fontSize: Theme.fontSize.m,
-    marginLeft: Theme.spacing.s,
-  },
-  mapContainer: {
-    height: 200,
-    borderRadius: Theme.borderRadius.m,
-    overflow: 'hidden',
-    marginBottom: Theme.spacing.l,
-  },
-  map: {
-    flex: 1,
-  },
-});
+}); 

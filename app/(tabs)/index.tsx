@@ -136,7 +136,6 @@ export default function HomeScreen() {
             onChangeText={setSearchQuery}
             placeholder={t('searchPlaceholder')}
             onVoiceSearch={() => console.log('Voice search')}
-            onSubmitEditing={() => handleSearch(searchQuery)}
           />
         </View>
         

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Calendar, Clock } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import { useTheme } from '@/hooks/useTheme';
 import Theme from '@/constants/theme';
 import { Booking } from '@/types';
 import Button from './Button';
@@ -19,18 +19,20 @@ export default function BookingCard({
   onRebook, 
   onCancel 
 }: BookingCardProps) {
+  const { colors } = useTheme();
+
   const getStatusColor = () => {
     switch (booking.status) {
       case 'confirmed':
-        return Colors.light.success;
+        return colors.success || '#4CAF50';
       case 'pending':
-        return Colors.light.warning;
+        return colors.warning || '#FFA500';
       case 'completed':
-        return Colors.light.primary;
+        return colors.primary;
       case 'cancelled':
-        return Colors.light.error;
+        return colors.error || '#FF3B30';
       default:
-        return Colors.light.textSecondary;
+        return colors.textSecondary;
     }
   };
 
@@ -40,7 +42,7 @@ export default function BookingCard({
 
   return (
     <TouchableOpacity 
-      style={styles.container} 
+      style={[styles.container, { backgroundColor: colors.card, shadowColor: colors.shadow || '#000' }]} 
       onPress={onPress}
       activeOpacity={0.8}
     >
@@ -51,28 +53,28 @@ export default function BookingCard({
           resizeMode="cover"
         />
         <View style={styles.headerInfo}>
-          <Text style={styles.fixerName}>{booking.fixerName}</Text>
-          <Text style={styles.service}>{booking.service}</Text>
+          <Text style={[styles.fixerName, { color: colors.text }]}>{booking.fixerName}</Text>
+          <Text style={[styles.service, { color: colors.textSecondary }]}>{booking.service}</Text>
         </View>
-        <View style={[styles.statusBadge, { backgroundColor: getStatusColor() }]}>
+        <View style={[styles.statusBadge, { backgroundColor: getStatusColor() }]}> 
           <Text style={styles.statusText}>{getStatusText()}</Text>
         </View>
       </View>
       
       <View style={styles.detailsContainer}>
         <View style={styles.detailRow}>
-          <Calendar size={16} color={Colors.light.textSecondary} />
-          <Text style={styles.detailText}>{booking.date}</Text>
+          <Calendar size={16} color={colors.textSecondary} />
+          <Text style={[styles.detailText, { color: colors.text }]}>{booking.date}</Text>
         </View>
         <View style={styles.detailRow}>
-          <Clock size={16} color={Colors.light.textSecondary} />
-          <Text style={styles.detailText}>{booking.time}</Text>
+          <Clock size={16} color={colors.textSecondary} />
+          <Text style={[styles.detailText, { color: colors.text }]}>{booking.time}</Text>
         </View>
-        <Text style={styles.address} numberOfLines={1}>{booking.address}</Text>
+        <Text style={[styles.address, { color: colors.text }]} numberOfLines={1}>{booking.address}</Text>
       </View>
       
-      <View style={styles.footer}>
-        <Text style={styles.price}>{booking.price}</Text>
+      <View style={[styles.footer, { borderTopColor: colors.border }]}> 
+        <Text style={[styles.price, { color: colors.text }]}>{booking.price}</Text>
         <View style={styles.actions}>
           {booking.status === 'completed' && onRebook && (
             <Button 
@@ -100,11 +102,9 @@ export default function BookingCard({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.common.white,
     borderRadius: Theme.borderRadius.m,
     padding: Theme.spacing.m,
     marginBottom: Theme.spacing.m,
-    shadowColor: Colors.common.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 10,
@@ -127,11 +127,9 @@ const styles = StyleSheet.create({
   fixerName: {
     fontSize: Theme.fontSize.m,
     fontWeight: Theme.fontWeight.semiBold,
-    color: Colors.light.text,
   },
   service: {
     fontSize: Theme.fontSize.s,
-    color: Colors.light.textSecondary,
   },
   statusBadge: {
     paddingHorizontal: Theme.spacing.s,
@@ -141,7 +139,7 @@ const styles = StyleSheet.create({
   statusText: {
     fontSize: Theme.fontSize.xs,
     fontWeight: Theme.fontWeight.medium,
-    color: Colors.common.white,
+    color: '#fff',
   },
   detailsContainer: {
     marginBottom: Theme.spacing.m,
@@ -153,12 +151,10 @@ const styles = StyleSheet.create({
   },
   detailText: {
     fontSize: Theme.fontSize.s,
-    color: Colors.light.text,
     marginLeft: Theme.spacing.s,
   },
   address: {
     fontSize: Theme.fontSize.s,
-    color: Colors.light.text,
     marginTop: Theme.spacing.xs,
   },
   footer: {
@@ -166,13 +162,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderTopWidth: 1,
-    borderTopColor: Colors.light.border,
     paddingTop: Theme.spacing.m,
   },
   price: {
     fontSize: Theme.fontSize.l,
     fontWeight: Theme.fontWeight.bold,
-    color: Colors.light.text,
   },
   actions: {
     flexDirection: 'row',

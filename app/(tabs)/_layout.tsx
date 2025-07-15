@@ -1,20 +1,27 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { Home, Calendar, MessageSquare, User } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import { Home, Calendar, MessageSquare, User, ShoppingBag } from 'lucide-react-native';
+import { useTheme } from '@/hooks/useTheme';
 
 export default function TabLayout() {
+  const { colors, isDark } = useTheme();
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.light.primary,
-        tabBarInactiveTintColor: Colors.light.textSecondary,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.textSecondary,
         tabBarStyle: {
-          borderTopColor: Colors.light.border,
+          backgroundColor: colors.card,
+          borderTopColor: colors.border,
           elevation: 0,
           shadowOpacity: 0,
+          height: 60,
         },
         headerShown: false,
+        tabBarLabelStyle: {
+          fontWeight: '600',
+          fontSize: 13,
+        },
       }}
     >
       <Tabs.Screen
@@ -32,6 +39,15 @@ export default function TabLayout() {
           title: 'Bookings',
           tabBarIcon: ({ color, size }) => (
             <Calendar size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="marketplace"
+        options={{
+          title: 'Marketplace',
+          tabBarIcon: ({ color, size }) => (
+            <ShoppingBag size={size} color={color} />
           ),
         }}
       />
