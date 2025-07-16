@@ -9,7 +9,7 @@ interface AuthState {
   isLoading: boolean;
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  register: (name: string, email: string, password: string, phone: string) => Promise<void>;
   logout: () => void;
   updateUser: (user: Partial<User>) => void;
   clearError: () => void;
@@ -44,7 +44,7 @@ export const useAuthStore = create<AuthState>()(
         }
       },
       
-      register: async (name: string, email: string, password: string) => {
+      register: async (name: string, email: string, password: string, phone: string) => {
         set({ isLoading: true, error: null });
         try {
           // Simulate API call
@@ -55,7 +55,7 @@ export const useAuthStore = create<AuthState>()(
             id: '1',
             name,
             email,
-            phone: '',
+            phone,
             avatar: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36',
           };
           

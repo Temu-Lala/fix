@@ -6,7 +6,8 @@ import {
   TouchableOpacity, 
   KeyboardAvoidingView, 
   Platform,
-  ScrollView
+  ScrollView,
+  TextInput,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -16,21 +17,82 @@ import Theme from '@/constants/theme';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import { useAuthStore } from '@/store/authStore';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import { useEffect } from 'react';
+import { WebView } from 'react-native-webview';
+import { Modal } from 'react-native';
 
 export default function AuthScreen() {
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [agreed, setAgreed] = useState(false);
+  const [localError, setLocalError] = useState('');
   const router = useRouter();
   
   const { login, register, isLoading, error, clearError } = useAuthStore();
 
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: 'YOUR_EXPO_CLIENT_ID.apps.googleusercontent.com',
+    androidClientId: 'YOUR_ANDROID_CLIENT_ID.apps.googleusercontent.com',
+    iosClientId: 'YOUR_IOS_CLIENT_ID.apps.googleusercontent.com',
+    webClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
+  });
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { authentication } = response;
+      // You can now use authentication.accessToken to fetch user info from Google
+      // Example: fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: `Bearer ${authentication.accessToken}` } })
+      // Then log in or register the user in your app
+    }
+  }, [response]);
+
+  const [telegramVisible, setTelegramVisible] = useState(false);
+  const TELEGRAM_BOT = 'YOUR_TELEGRAM_BOT'; // e.g. 'my_bot'
+  const TELEGRAM_URL = `https://oauth.telegram.org/auth?bot=${TELEGRAM_BOT}&origin=${encodeURIComponent('https://your-app.com')}&embed=1&request_access=write`;
+
+  const handleTelegramAuth = () => {
+    setTelegramVisible(true);
+  };
+
+  const [forgotVisible, setForgotVisible] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotLoading, setForgotLoading] = useState(false);
+  const [forgotMessage, setForgotMessage] = useState('');
+
+  const handleForgotPassword = async () => {
+    setForgotLoading(true);
+    setForgotMessage('');
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    if (forgotEmail.includes('@')) {
+      setForgotMessage('If this email is registered, a reset link has been sent.');
+    } else {
+      setForgotMessage('Please enter a valid email address.');
+    }
+    setForgotLoading(false);
+  };
+
   const handleAuth = async () => {
+    setLocalError('');
+    if (!isLogin) {
+      if (password !== confirmPassword) {
+        setLocalError('Passwords do not match');
+        return;
+      }
+      if (!agreed) {
+        setLocalError('You must agree to the terms and conditions');
+        return;
+      }
+    }
     if (isLogin) {
       await login(email, password);
     } else {
-      await register(name, email, password);
+      await register(name, email, password, phone);
     }
     
     // Navigate to main app if authenticated
@@ -66,13 +128,23 @@ export default function AuthScreen() {
           
           <View style={styles.form}>
             {!isLogin && (
-              <Input
-                label="Full Name"
-                placeholder="Enter your full name"
-                value={name}
-                onChangeText={setName}
-                leftIcon={<User size={20} color={Colors.light.textSecondary} />}
-              />
+              <>
+                <Input
+                  label="Full Name"
+                  placeholder="Enter your full name"
+                  value={name}
+                  onChangeText={setName}
+                  leftIcon={<User size={20} color={Colors.light.textSecondary} />}
+                />
+                <Input
+                  label="Phone Number"
+                  placeholder="Enter your phone number"
+                  value={phone}
+                  onChangeText={setPhone}
+                  keyboardType="phone-pad"
+                  leftIcon={<Mail size={20} color={Colors.light.textSecondary} />}
+                />
+              </>
             )}
             
             <Input
@@ -92,15 +164,37 @@ export default function AuthScreen() {
               secureTextEntry
               leftIcon={<Lock size={20} color={Colors.light.textSecondary} />}
             />
-            
+            {!isLogin && (
+              <Input
+                label="Confirm Password"
+                placeholder="Re-enter your password"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry
+                leftIcon={<Lock size={20} color={Colors.light.textSecondary} />}
+              />
+            )}
+            {!isLogin && (
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16 }}>
+                <TouchableOpacity
+                  onPress={() => setAgreed(!agreed)}
+                  style={{ width: 24, height: 24, borderWidth: 1, borderColor: Colors.light.primary, borderRadius: 4, alignItems: 'center', justifyContent: 'center', backgroundColor: agreed ? Colors.light.primary : 'transparent' }}
+                >
+                  {agreed && <View style={{ width: 14, height: 14, backgroundColor: '#fff', borderRadius: 2 }} />}
+                </TouchableOpacity>
+                <Text style={{ marginLeft: 8 }}>
+                  I agree to the <Text style={{ color: Colors.light.primary, textDecorationLine: 'underline' }}>Terms & Conditions</Text>
+                </Text>
+              </View>
+            )}
             {isLogin && (
-              <TouchableOpacity style={styles.forgotPassword}>
+              <TouchableOpacity style={styles.forgotPassword} onPress={() => setForgotVisible(true)}>
                 <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
               </TouchableOpacity>
             )}
             
-            {error && (
-              <Text style={styles.errorText}>{error}</Text>
+            {(error || localError) && (
+              <Text style={styles.errorText}>{error || localError}</Text>
             )}
             
             <Button
@@ -117,15 +211,14 @@ export default function AuthScreen() {
             </View>
             
             <Button
-              title={`Sign in with Google`}
-              onPress={() => {}}
+              title="Sign in with Google"
+              onPress={() => promptAsync()}
               variant="outline"
               style={styles.socialButton}
             />
-            
             <Button
-              title={`Sign in with Apple`}
-              onPress={() => {}}
+              title="Sign in with Telegram"
+              onPress={handleTelegramAuth}
               variant="outline"
               style={styles.socialButton}
             />
@@ -143,6 +236,72 @@ export default function AuthScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+      <Modal
+        visible={forgotVisible}
+        animationType="slide"
+        transparent
+        onRequestClose={() => setForgotVisible(false)}
+      >
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#0008', // semi-transparent black
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: '#fff',
+              padding: 24,
+              borderRadius: 12,
+              width: '85%',
+            }}
+          >
+            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 16 }}>
+              Reset Password
+            </Text>
+            <Input
+              label="Email"
+              placeholder="Enter your email"
+              value={forgotEmail}
+              onChangeText={setForgotEmail}
+              keyboardType="email-address"
+            />
+            {forgotMessage ? (
+              <Text
+                style={{
+                  color: forgotMessage.startsWith('If') ? 'green' : 'red',
+                  marginBottom: 8,
+                }}
+              >
+                {forgotMessage}
+              </Text>
+            ) : null}
+            <Button
+              title={forgotLoading ? 'Sending...' : 'Send Reset Link'}
+              onPress={handleForgotPassword}
+              disabled={forgotLoading}
+              style={{ marginBottom: 8 }}
+            />
+            <Button title="Close" onPress={() => setForgotVisible(false)} variant="outline" />
+          </View>
+        </View>
+      </Modal>
+      <Modal visible={telegramVisible} animationType="slide" onRequestClose={() => setTelegramVisible(false)}>
+        <WebView
+          source={{ uri: TELEGRAM_URL }}
+          onNavigationStateChange={navState => {
+            // You need to handle the redirect/callback here
+            // For production, set up a backend to verify the Telegram login
+            if (navState.url.startsWith('https://your-app.com/telegram-auth-callback')) {
+              // Parse user info from navState.url
+              setTelegramVisible(false);
+              // Log in or register the user in your app
+            }
+          }}
+        />
+      </Modal>
     </SafeAreaView>
   );
 }
