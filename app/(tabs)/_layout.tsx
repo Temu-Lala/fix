@@ -1,10 +1,17 @@
-import React from 'react';
-import { Tabs } from 'expo-router';
-import { Home, Calendar, MessageSquare, User, ShoppingBag } from 'lucide-react-native';
-import { useTheme } from '@/hooks/useTheme';
+import React from "react";
+import { Tabs } from "expo-router";
+import {
+  Home,
+  Calendar,
+  MessageSquare,
+  User,
+  ShoppingBag,
+  Repeat, // Use this for Barter
+} from "lucide-react-native";
+import { useTheme } from "@/hooks/useTheme";
 
 export default function TabLayout() {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   return (
     <Tabs
       screenOptions={{
@@ -19,7 +26,7 @@ export default function TabLayout() {
         },
         headerShown: false,
         tabBarLabelStyle: {
-          fontWeight: '600',
+          fontWeight: "600",
           fontSize: 13,
         },
       }}
@@ -27,16 +34,14 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <Home size={size} color={color} />
-          ),
+          title: "Home",
+          tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="bookings"
         options={{
-          title: 'Bookings',
+          title: "Bookings",
           tabBarIcon: ({ color, size }) => (
             <Calendar size={size} color={color} />
           ),
@@ -45,16 +50,23 @@ export default function TabLayout() {
       <Tabs.Screen
         name="marketplace"
         options={{
-          title: 'Marketplace',
+          title: "Marketplace",
           tabBarIcon: ({ color, size }) => (
             <ShoppingBag size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
+        name="barter"
+        options={{
+          title: "Barter",
+          tabBarIcon: ({ color, size }) => <Repeat size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="chat"
         options={{
-          title: 'Chat',
+          title: "Chat",
           tabBarIcon: ({ color, size }) => (
             <MessageSquare size={size} color={color} />
           ),
@@ -63,10 +75,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <User size={size} color={color} />
-          ),
+          title: "Profile",
+          tabBarIcon: ({ color, size }) => <User size={size} color={color} />,
         }}
       />
     </Tabs>
